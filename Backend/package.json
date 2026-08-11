@@ -1,0 +1,30 @@
+{
+  "name": "klyptic-backend",
+  "version": "1.0.0",
+  "description": "Klyptic Express application backend — auth, knowledge CRUD, uploads, and AI-engine proxy",
+  "private": true,
+  "type": "module",
+  "main": "server.js",
+  "scripts": {
+    "dev": "node --watch server.js",
+    "start": "node server.js",
+    "lint": "echo \"No linter configured yet\""
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "bcryptjs": "^3.0.2",
+    "cors": "^2.8.5",
+    "dotenv": "^16.6.1",
+    "express": "^5.1.0",
+    "express-rate-limit": "^7.5.1",
+    "helmet": "^8.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.16.4",
+    "morgan": "^1.10.1",
+    "multer": "^2.0.2",
+    "p-queue": "^9.3.3",
+    "zod": "^3.25.76"
+  }
+}

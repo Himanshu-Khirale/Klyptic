@@ -1,0 +1,69 @@
+# Goal Description
+
+Initialize the **AI Engine** (Phase 4 of the Klyptic architecture) using Python and FastAPI. This engine will handle all AI-related tasks such as text extraction, chunking, embeddings, semantic search, and interactions with Large Language Models (LLMs) via LangChain. The goal is to set up a robust, modular foundation that integrates seamlessly with the existing Express backend.
+
+## User Review Required
+
+> [!IMPORTANT]  
+> Please review the `requirements.txt` dependencies and confirm if you have a preferred LLM provider (e.g., OpenAI, Google Gemini, Anthropic). This will help in correctly configuring the LangChain embedding and chat models during implementation.
+
+## Open Questions
+
+> [!WARNING]  
+> 1. Which LLM Provider would you like to use for embeddings and text generation (e.g., OpenAI, Gemini, HuggingFace)? 
+> 2. Are you using a local Python environment or would you prefer a Dockerized setup immediately for this engine?
+> 3. Should ChromaDB be configured to persist data locally in a `.chroma` folder within the `ai-engine` directory?
+
+## Proposed Changes
+
+We will create a new top-level directory `ai-engine` and structure it according to the `ARCHITECTURE.md` guidelines.
+
+### AI Engine Scaffolding
+
+#### [NEW] [requirements.txt](file:///d:/Projects/Project/ai-engine/requirements.txt)
+Will define dependencies including `fastapi`, `uvicorn`, `langchain`, `chromadb`, `pydantic`, `python-dotenv`, and the required LangChain integrations.
+
+#### [NEW] [main.py](file:///d:/Projects/Project/ai-engine/app/main.py)
+The entry point for the FastAPI application. It will initialize the app, configure CORS/middlewares (if necessary), and include the API routers.
+
+### Core Modules
+
+We will create the following directories within `ai-engine/app/` to ensure a modular architecture:
+- `api/`: API routers and route definitions.
+- `chains/`: LangChain chains for ingestion, summarization, etc.
+- `embeddings/`: Embedding model configurations.
+- `loaders/`: Document loaders (PDF, Text, URL, etc.).
+- `prompts/`: Prompt templates for various tasks.
+- `retrieval/`: RAG retrieval logic.
+- `vectorstore/`: ChromaDB initialization and client management.
+- `services/`: Business logic bridging the API and LangChain chains.
+- `utils/`: Helper functions.
+
+### API Endpoints Setup
+
+#### [NEW] [api/routes.py](file:///d:/Projects/Project/ai-engine/app/api/routes.py)
+Will define the API router with stub implementations for the endpoints expected by the Express backend (`ai.service.js`):
+- `GET /health`
+- `POST /api/v1/ingest`
+- `POST /api/v1/search`
+- `POST /api/v1/chat`
+- `POST /api/v1/insights`
+- `POST /api/v1/knowledge/delete`
+
+### Configuration
+
+#### [NEW] [.env](file:///d:/Projects/Project/ai-engine/.env)
+Will store environment variables (API keys, ChromaDB path, etc.).
+
+#### [NEW] [vectorstore/chroma_client.py](file:///d:/Projects/Project/ai-engine/app/vectorstore/chroma_client.py)
+Will initialize the ChromaDB client (local persistent storage by default).
+
+## Verification Plan
+
+### Automated Tests
+1. Start the FastAPI server using `uvicorn app.main:app --reload --port 8000`.
+2. Ping the `GET /health` endpoint using `curl` or browser to ensure the server is alive.
+3. Validate that the Express backend no longer fails/skips AI tasks when connected to `http://localhost:8000`.
+
+### Manual Verification
+Review the generated folder structure to ensure it perfectly matches the architectural guidelines. Ensure all placeholder endpoints accept the `X-User-Id` header and return valid JSON structures.
